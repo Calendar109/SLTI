@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLTI 小狸花排行榜</title>
+  <style>
+    :root {
+      --bg: #1a0f0a;
+      --panel: rgba(45, 24, 16, 0.9);
+      --panel-strong: #2d1810;
+      --text: #f5e6dc;
+      --muted: #8b7355;
+      --line: rgba(139, 115, 85, 0.25);
+      --accent: #e8a090;
+      --accent-soft: rgba(232, 160, 144, 0.16);
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --bronze: #cd7f32;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #1a0f0a 0%, #2d1810 50%, #1a0f0a 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      padding: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 160, 144, 0.28) 0%, rgba(232, 160, 144, 0) 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      color: #c9a090;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #e8a090, #c45a42);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-copy p {
+      margin: 14px 0 0;
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .link-btn,
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      font: inherit;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .link-btn:hover,
+    .ghost-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(232, 160, 144, 0.55);
+    }
+
+    .link-btn {
+      background: linear-gradient(135deg, #e8a090, #c45a42);
+      border-color: transparent;
+      color: #1a0f0a;
+      font-weight: 800;
+    }
+
+    .ghost-btn {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    .meta-row {
+      margin-top: 22px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .summary-card {
+      padding: 20px;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary-value {
+      margin-top: 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #e8a090, #c45a42);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-note {
+      margin-top: 8px;
+      color: #a08070;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 22px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+
+    .panel-head p,
+    .panel-head .status {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .podium {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .podium-card {
+      position: relative;
+      min-height: 100%;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      overflow: hidden;
+    }
+
+    .podium-card.rank-1 {
+      box-shadow: inset 0 0 0 2px rgba(255, 215, 0, 0.35);
+    }
+
+    .podium-card.rank-2 {
+      box-shadow: inset 0 0 0 2px rgba(192, 192, 192, 0.3);
+    }
+
+    .podium-card.rank-3 {
+      box-shadow: inset 0 0 0 2px rgba(205, 127, 50, 0.3);
+    }
+
+    .podium-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-weight: 900;
+      color: #1a0f0a;
+    }
+
+    .podium-card.rank-1 .podium-rank {
+      background: var(--gold);
+    }
+
+    .podium-card.rank-2 .podium-rank {
+      background: var(--silver);
+    }
+
+    .podium-card.rank-3 .podium-rank {
+      background: var(--bronze);
+    }
+
+    .podium-image {
+      width: 100%;
+      aspect-ratio: 1;
+      margin-top: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .podium-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .podium-code {
+      margin-top: 14px;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .podium-cn {
+      margin-top: 2px;
+      color: #c9a090;
+      font-size: 14px;
+    }
+
+    .podium-stats {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mini-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d5c0b0;
+      font-size: 12px;
+    }
+
+    .leaderboard-table {
+      display: grid;
+      gap: 10px;
+    }
+
+    .leaderboard-row {
+      display: grid;
+      grid-template-columns: 68px minmax(0, 1.5fr) minmax(210px, 232px) minmax(160px, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .leaderboard-row[data-rank="1"] {
+      background: rgba(255, 215, 0, 0.08);
+    }
+
+    .leaderboard-row[data-rank="2"] {
+      background: rgba(192, 192, 192, 0.07);
+    }
+
+    .leaderboard-row[data-rank="3"] {
+      background: rgba(205, 127, 50, 0.07);
+    }
+
+    .rank-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(232, 160, 144, 0.12);
+      color: #e8c0b0;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .persona-cell {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .persona-thumb {
+      width: 56px;
+      height: 56px;
+      flex: 0 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .persona-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .persona-info {
+      min-width: 0;
+    }
+
+    .persona-code {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .persona-name {
+      margin-top: 2px;
+      color: #a08070;
+      font-size: 13px;
+    }
+
+    .stats-cell {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-items: center;
+    }
+
+    .count-cell,
+    .share-cell {
+      font-size: 20px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .count-cell small,
+    .share-cell small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .bar-cell {
+      display: grid;
+      gap: 6px;
+    }
+
+    .bar-track {
+      position: relative;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .bar-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--bar, 0%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ffd700, #e8a090);
+    }
+
+    .bar-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .empty-state {
+      padding: 24px;
+      border-radius: 18px;
+      border: 1px dashed var(--line);
+      color: #c9a090;
+      background: rgba(255, 255, 255, 0.03);
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .footnote {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 980px) {
+
+      .summary-grid,
+      .podium {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .summary-grid .summary-card:last-child,
+      .podium .podium-card:last-child {
+        grid-column: span 2;
+      }
+
+      .leaderboard-row {
+        grid-template-columns: 60px minmax(0, 1fr) minmax(176px, 196px);
+      }
+
+      .stats-cell {
+        gap: 10px;
+      }
+
+      .bar-cell {
+        grid-column: 2 / -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100%, calc(100% - 20px));
+        padding-top: 14px;
+      }
+
+      .hero,
+      .panel,
+      .summary-card {
+        padding: 18px;
+      }
+
+      .hero-copy h1 {
+        font-size: 34px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .summary-card {
+        padding: 16px;
+      }
+
+      .summary-grid .summary-card:last-child {
+        grid-column: auto;
+      }
+
+      .podium {
+        grid-template-columns: 1fr;
+      }
+
+      .podium .podium-card:last-child {
+        grid-column: auto;
+      }
+
+      .leaderboard-row {
+        grid-template-columns: 44px minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .rank-badge {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        font-size: 14px;
+      }
+
+      .persona-cell {
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .persona-thumb {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+      }
+
+      .persona-code {
+        font-size: 16px;
+      }
+
+      .persona-name {
+        font-size: 12px;
+      }
+
+      .stats-cell {
+        grid-column: 3;
+        gap: 8px;
+        align-self: start;
+        justify-self: end;
+      }
+
+      .bar-cell {
+        grid-column: 2 / -1;
+      }
+
+      .count-cell,
+      .share-cell {
+        font-size: 16px;
+        text-align: right;
+      }
+
+      .count-cell small,
+      .share-cell small {
+        font-size: 10px;
+        margin-top: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <section class="hero card">
+      <div class="eyebrow">SLTI Stats Board</div>
+      <div class="hero-top">
+        <div class="hero-copy">
+          <h1>小狸花排行榜</h1>
+          <p>查看本地测试结果统计（数据保存在浏览器中）</p>
+        </div>
+        <div class="hero-actions">
+          <a class="link-btn" href="./index.html">返回测试</a>
+          <a class="ghost-btn" href="./gallery.html">人格图鉴</a>
+          <button id="refreshBtn" class="ghost-btn" type="button">刷新统计</button>
+          <button id="clearBtn" class="ghost-btn" type="button">清除数据</button>
+        </div>
+      </div>
+      <div class="meta-row">
+        <span id="updatedAt">最近更新：读取中...</span>
+      </div>
+    </section>
+
+    <section id="summaryStats" class="summary-grid">
+      <article class="summary-card card">
+        <div class="summary-label">完成测试数</div>
+        <div class="summary-value" id="totalResults">--</div>
+        <div class="summary-note">在此浏览器中完成测试的次数</div>
+      </article>
+      <article class="summary-card card">
+        <div class="summary-label">已命中人格数</div>
+        <div class="summary-value" id="uniquePersonasHit">--</div>
+        <div class="summary-note">至少出现过一次的人格类型数量</div>
+      </article>
+      <article class="summary-card card">
+        <div class="summary-label">当前榜首</div>
+        <div class="summary-value" id="leaderName">--</div>
+        <div class="summary-note" id="leaderNote">等待统计数据...</div>
+      </article>
+      <article class="summary-card card">
+        <div class="summary-label">最近测试</div>
+        <div class="summary-value" id="lastResult">--</div>
+        <div class="summary-note" id="lastResultTime">暂无记录</div>
+      </article>
+    </section>
+
+    <section id="rankingPanel" class="panel card">
+      <div class="panel-head">
+        <div>
+          <h2>榜单前三</h2>
+          <p>按最终人格结果的累计次数排序</p>
+        </div>
+        <div class="status" id="podiumStatus">正在加载...</div>
+      </div>
+      <div id="podium" class="podium"></div>
+    </section>
+
+    <section class="panel card">
+      <div class="panel-head">
+        <div>
+          <h2>完整排行榜</h2>
+        </div>
+        <div class="status" id="tableStatus">正在加载...</div>
+      </div>
+      <div id="leaderboardTable" class="leaderboard-table"></div>
+    </section>
+
+    <p class="footnote">* 数据保存在浏览器本地存储中，清除浏览器数据会丢失统计。</p>
+  </div>
+
+  <script>
+    const TYPES = [
+      { code: "ALL-IN", cn: "全都要狸", intro: "哪里有秦彻，哪里就有我", img: "./images/ALL-IN/ALL-IN.webp" },
+      { code: "RICH", cn: "氪金狸", intro: "爱要用钱证明", img: "./images/RICH/RICH.webp" },
+      { code: "ARMY", cn: "战斗狸", intro: "我不允许TA被随便对待", img: "./images/ARMY/ARMY.webp" },
+      { code: "COOK", cn: "厨师狸", intro: "对你的喜欢，会从我的脑中溢出", img: "./images/COOK/COOK.webp" },
+      { code: "LORE", cn: "考据狸", intro: "关于秦彻的一切全都知道", img: "./images/LORE/LORE.webp" },
+      { code: "BARD", cn: "传教狸", intro: "不安利不舒服斯基", img: "./images/BARD/BARD.webp" },
+      { code: "SAVE", cn: "存档狸", intro: "秦彻的一切都不能消失", img: "./images/SAVE/SAVE.webp" },
+      { code: "SOLO", cn: "专一狸", intro: "这辈子就栽在秦彻上了", img: "./images/SOLO/SOLO.webp" },
+      { code: "DATA", cn: "数据狸", intro: "想要让大家看到秦彻的价值", img: "./images/DATA/DATA.webp" },
+      { code: "COS-er", cn: "扮演狸", intro: "秦彻秦彻，请你跨越次元", img: "./images/COS-er/COS-er.webp" },
+      { code: "LIVE", cn: "陪伴狸", intro: "我生活的日常是和秦彻一起的日常", img: "./images/LIVE/LIVE.webp" },
+      { code: "NUDE", cn: "大黄狸", intro: "我明白了！你是那种色色的狸！", img: "./images/NUDE/NUDE.webp" },
+      { code: "MAKE", cn: "手工狸", intro: "对秦彻的爱要化为实体陪在身边", img: "./images/MAKE/MAKE.webp" },
+      { code: "CHEC-K", cn: "巧氪狸", intro: "爱和钱都要花在刀刃上", img: "./images/CHEC-K/CHEC-K.webp" },
+      { code: "ZEN", cn: "佛系狸", intro: "我只是默默陪着秦彻而已", img: "./images/ZEN/ZEN.webp" },
+      { code: "MEET", cn: "线下狸", intro: "和你相关的一切，我都想亲身参与", img: "./images/MEET/MEET.webp" },
+      { code: "PORT", cn: "搬运狸", intro: "这么好的秦彻，大家不知道太可惜了", img: "./images/PORT/PORT.webp" },
+      { code: "ECHO", cn: "代入狸", intro: "剧情里的每一句话，都好像在说我", img: "./images/ECHO/ECHO.webp" },
+      { code: "DIVE", cn: "潜水狸", intro: "我在，但我不出声", img: "./images/DIVE/DIVE.webp" },
+      { code: "HIDE", cn: "地下狸", intro: "不能让猎人协会知道我和秦彻有一腿", img: "./images/HIDE/HIDE.webp" },
+      { code: "OQCK", cn: "随缘狸", intro: "他长得还可以他长得还可以", img: "./images/OQCK/OQCK.webp" },
+      { code: "BUSY", cn: "多推狸", intro: "我同时和八个男人结婚，不犯法", img: "./images/BUSY/BUSY.webp" },
+      { code: "FLOW", cn: "听话狸", intro: "大家一起喜欢秦彻才有意思", img: "./images/FLOW/FLOW.webp" },
+      { code: "OUTD", cn: "编外狸", intro: "你在我的水里加了什么，好热", img: "./images/OUTD/OUTD.webp" },
+      { code: "EXIT", cn: "脱坑狸", intro: "我们的故事，到这里了", img: "./images/EXIT/EXIT.webp" },
+      { code: "UNKNOWN", cn: "狸到底是谁？", intro: "你已经超出了常见的小狸花分类", img: "./images/UNKNOWN/UNKNOWN.webp" },
+    ];
+
+    const TYPE_MAP = Object.fromEntries(TYPES.map((item) => [item.code, item]));
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat('zh-CN').format(value || 0);
+    }
+
+    function formatTime(timestamp) {
+      if (!timestamp) return '暂无数据';
+      const date = new Date(timestamp);
+      return new Intl.DateTimeFormat('zh-CN', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }).format(date);
+    }
+
+    function getStats() {
+      try {
+        return JSON.parse(localStorage.getItem('slti_stats') || '{"results":[]}');
+      } catch (e) {
+        return { results: [] };
+      }
+    }
+
+    function computeRanking(stats) {
+      const countMap = {};
+      TYPES.forEach(t => countMap[t.code] = 0);
+
+      stats.results.forEach(r => {
+        if (countMap[r.code] !== undefined) {
+          countMap[r.code]++;
+        }
+      });
+
+      const total = stats.results.length;
+      const ranking = TYPES.map(t => ({
+        code: t.code,
+        cn: t.cn,
+        img: t.img,
+        intro: t.intro,
+        count: countMap[t.code],
+        share: total > 0 ? Math.round((countMap[t.code] / total) * 100) : 0
+      })).sort((a, b) => b.count - a.count);
+
+      return ranking;
+    }
+
+    function renderPodium(ranking, total) {
+      const podium = document.getElementById('podium');
+      if (!total) {
+        podium.innerHTML = '<div class="empty-state">还没有测试记录。完成测试后会在这里显示排行。</div>';
+        return;
+      }
+
+      podium.innerHTML = ranking.slice(0, 3).map((item, index) => {
+        const meta = TYPE_MAP[item.code] || { code: item.code, cn: item.code, intro: '', img: '' };
+        return `
+          <article class="podium-card rank-${index + 1}">
+            <div class="podium-rank">#${index + 1}</div>
+            <div class="podium-image">
+              <img src="${meta.img}" alt="${meta.code}（${meta.cn}）" loading="lazy" />
+            </div>
+            <div class="podium-code">${meta.code}</div>
+            <div class="podium-cn">${meta.cn}</div>
+            <div class="podium-stats">
+              <div class="mini-chip">次数 ${formatNumber(item.count)}</div>
+              <div class="mini-chip">占比 ${item.share}%</div>
+            </div>
+            <div class="summary-note">${meta.intro}</div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderTable(ranking, total) {
+      const table = document.getElementById('leaderboardTable');
+      if (!total) {
+        table.innerHTML = '<div class="empty-state">暂无数据</div>';
+        return;
+      }
+
+      table.innerHTML = ranking.map((item, index) => {
+        const meta = TYPE_MAP[item.code] || { code: item.code, cn: item.code, img: '' };
+        const barWidth = total ? `${Math.max(item.share, item.count > 0 ? 2 : 0)}%` : '0%';
+        return `
+          <article class="leaderboard-row" data-rank="${index + 1}">
+            <div class="rank-badge">#${index + 1}</div>
+            <div class="persona-cell">
+              <div class="persona-thumb">
+                <img src="${meta.img}" alt="${meta.code}（${meta.cn}）" loading="lazy" />
+              </div>
+              <div class="persona-info">
+                <div class="persona-code">${meta.code}</div>
+                <div class="persona-name">${meta.cn}</div>
+              </div>
+            </div>
+            <div class="stats-cell">
+              <div class="count-cell">
+                ${formatNumber(item.count)}
+                <small>累计次数</small>
+              </div>
+              <div class="share-cell">
+                ${item.share}%
+                <small>结果占比</small>
+              </div>
+            </div>
+            <div class="bar-cell">
+              <div class="bar-track">
+                <div class="bar-fill" style="--bar:${barWidth};"></div>
+              </div>
+              <div class="bar-label">${item.count > 0 ? `${meta.code} 占全部结果的 ${item.share}%` : '暂无记录'}</div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function loadStats() {
+      const stats = getStats();
+      const ranking = computeRanking(stats);
+      const total = stats.results.length;
+      const uniqueHit = ranking.filter(r => r.count > 0).length;
+      const leader = ranking[0];
+      const lastResult = stats.results.length > 0 ? stats.results[stats.results.length - 1] : null;
+
+      document.getElementById('totalResults').textContent = formatNumber(total);
+      document.getElementById('uniquePersonasHit').textContent = formatNumber(uniqueHit);
+      document.getElementById('updatedAt').textContent = `最近更新：${formatTime(Date.now())}`;
+      document.getElementById('podiumStatus').textContent = total ? '已加载' : '暂无数据';
+      document.getElementById('tableStatus').textContent = `共 ${ranking.length} 种人格`;
+
+      if (leader && leader.count > 0) {
+        document.getElementById('leaderName').textContent = leader.code;
+        document.getElementById('leaderNote').textContent = `${leader.cn} 出现 ${formatNumber(leader.count)} 次，占比 ${leader.share}%`;
+      } else {
+        document.getElementById('leaderName').textContent = '暂无';
+        document.getElementById('leaderNote').textContent = '还没有任何测试记录';
+      }
+
+      if (lastResult) {
+        const lastMeta = TYPE_MAP[lastResult.code];
+        document.getElementById('lastResult').textContent = lastResult.code;
+        document.getElementById('lastResultTime').textContent = formatTime(lastResult.time);
+      } else {
+        document.getElementById('lastResult').textContent = '--';
+        document.getElementById('lastResultTime').textContent = '暂无记录';
+      }
+
+      renderPodium(ranking, total);
+      renderTable(ranking, total);
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadStats);
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (confirm('确定要清除所有统计数据吗？此操作不可撤销。')) {
+        localStorage.removeItem('slti_stats');
+        loadStats();
+      }
+    });
+
+    loadStats();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLTI 小狸花人格图鉴</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #1a0f0a 0%, #2d1810 50%, #1a0f0a 100%);
+      color: #f5e6dc;
+      min-height: 100vh;
+    }
+
+    .header {
+      text-align: center;
+      padding: 48px 20px 32px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #e8a090, #c45a42);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      margin-top: 8px;
+      color: #8b7355;
+      font-size: 14px;
+    }
+
+    .header-actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid #4a3528;
+      background: #2d1810;
+      color: #f5e6dc;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      border-color: #c45a42;
+      background: #3d2518;
+    }
+
+    .nav-btn.primary {
+      background: linear-gradient(135deg, #e8a090, #c45a42);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 0 20px 32px;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #4a3528;
+      background: #2d1810;
+      color: #8b7355;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .filter-btn:hover {
+      border-color: #c45a42;
+      color: #e8a090;
+    }
+
+    .filter-btn.active {
+      background: #c45a42;
+      color: #fff;
+      border-color: #c45a42;
+    }
+
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #2d1810;
+      border: 1px solid #4a3528;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(196, 90, 66, 0.25);
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #3d2518;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .card-body {
+      padding: 14px;
+    }
+
+    .card-code {
+      font-size: 18px;
+      font-weight: 800;
+      color: #f5e6dc;
+    }
+
+    .card-cn {
+      font-size: 13px;
+      color: #8b7355;
+      margin-top: 2px;
+    }
+
+    .card-intro {
+      font-size: 12px;
+      color: #6b5040;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .rarity-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .rarity-legendary {
+      background: linear-gradient(135deg, #ffd700, #ffec8b);
+      color: #8b6914;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+    }
+
+    .rarity-epic {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(155, 89, 182, 0.4);
+    }
+
+    .rarity-rare {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .rarity-uncommon {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: #fff;
+    }
+
+    .rarity-common {
+      background: #4a3528;
+      color: #8b7355;
+    }
+
+    .rarity-special {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(231, 76, 60, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    .stats {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #e8a090, #c45a42);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #8b7355;
+      margin-top: 2px;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 0 20px 24px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #8b7355;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 28px;
+      }
+
+      .header-actions {
+        gap: 10px;
+      }
+
+      .nav-btn {
+        min-height: 40px;
+        padding: 0 14px;
+        font-size: 13px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .card-body {
+        padding: 10px;
+      }
+
+      .card-code {
+        font-size: 15px;
+      }
+
+      .card-intro {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>SLTI 小狸花人格图鉴</h1>
+    <p>26 种小狸花人格 · 你是哪一种？</p>
+    <div class="header-actions">
+      <a class="nav-btn primary" href="./index.html">进入测试</a>
+      <a class="nav-btn" href="./leaderboard.html">查看统计</a>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">26</div>
+      <div class="stat-label">人格总数</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">大模型</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">15</div>
+      <div class="stat-label">维度</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-label">特殊人格</div>
+    </div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const TYPES = [
+      { code: "ALL-IN", cn: "全都要狸", intro: "哪里有秦彻，哪里就有我", rarity: "legendary", img: "./images/ALL-IN/ALL-IN.webp" },
+      { code: "RICH", cn: "氪金狸", intro: "爱要用钱证明", rarity: "epic", img: "./images/RICH/RICH.webp" },
+      { code: "ARMY", cn: "战斗狸", intro: "我不允许TA被随便对待", rarity: "epic", img: "./images/ARMY/ARMY.webp" },
+      { code: "COOK", cn: "厨师狸", intro: "对你的喜欢，会从我的脑中溢出", rarity: "epic", img: "./images/COOK/COOK.webp" },
+      { code: "LORE", cn: "考据狸", intro: "关于秦彻的一切全都知道", rarity: "epic", img: "./images/LORE/LORE.webp" },
+      { code: "BARD", cn: "传教狸", intro: "不安利不舒服斯基", rarity: "rare", img: "./images/BARD/BARD.webp" },
+      { code: "SAVE", cn: "存档狸", intro: "秦彻的一切都不能消失", rarity: "rare", img: "./images/SAVE/SAVE.webp" },
+      { code: "SOLO", cn: "专一狸", intro: "这辈子就栽在秦彻上了", rarity: "rare", img: "./images/SOLO/SOLO.webp" },
+      { code: "DATA", cn: "数据狸", intro: "想要让大家看到秦彻的价值", rarity: "rare", img: "./images/DATA/DATA.webp" },
+      { code: "COS-er", cn: "扮演狸", intro: "秦彻秦彻，请你跨越次元", rarity: "rare", img: "./images/COS-er/COS-er.webp" },
+      { code: "LIVE", cn: "陪伴狸", intro: "我生活的日常是和秦彻一起的日常", rarity: "rare", img: "./images/LIVE/LIVE.webp" },
+      { code: "NUDE", cn: "大黄狸", intro: "我明白了！你是那种色色的狸！", rarity: "rare", img: "./images/NUDE/NUDE.webp" },
+      { code: "MAKE", cn: "手工狸", intro: "对秦彻的爱要化为实体陪在身边", rarity: "rare", img: "./images/MAKE/MAKE.webp" },
+      { code: "CHEC-K", cn: "巧氪狸", intro: "爱和钱都要花在刀刃上", rarity: "uncommon", img: "./images/CHEC-K/CHEC-K.webp" },
+      { code: "ZEN", cn: "佛系狸", intro: "我只是默默陪着秦彻而已", rarity: "uncommon", img: "./images/ZEN/ZEN.webp" },
+      { code: "MEET", cn: "线下狸", intro: "和你相关的一切，我都想亲身参与", rarity: "uncommon", img: "./images/MEET/MEET.webp" },
+      { code: "PORT", cn: "搬运狸", intro: "这么好的秦彻，大家不知道太可惜了", rarity: "uncommon", img: "./images/PORT/PORT.webp" },
+      { code: "ECHO", cn: "代入狸", intro: "剧情里的每一句话，都好像在说我", rarity: "uncommon", img: "./images/ECHO/ECHO.webp" },
+      { code: "DIVE", cn: "潜水狸", intro: "我在，但我不出声", rarity: "common", img: "./images/DIVE/DIVE.webp" },
+      { code: "HIDE", cn: "地下狸", intro: "不能让猎人协会知道我和秦彻有一腿", rarity: "common", img: "./images/HIDE/HIDE.webp" },
+      { code: "OQCK", cn: "随缘狸", intro: "他长得还可以他长得还可以", rarity: "common", img: "./images/OQCK/OQCK.webp" },
+      { code: "BUSY", cn: "多推狸", intro: "我同时和八个男人结婚，不犯法", rarity: "common", img: "./images/BUSY/BUSY.webp" },
+      { code: "FLOW", cn: "听话狸", intro: "大家一起喜欢秦彻才有意思", rarity: "common", img: "./images/FLOW/FLOW.webp" },
+      { code: "OUTD", cn: "编外狸", intro: "你在我的水里加了什么，好热", rarity: "common", img: "./images/OUTD/OUTD.webp" },
+      { code: "EXIT", cn: "脱坑狸", intro: "我们的故事，到这里了", rarity: "special", img: "./images/EXIT/EXIT.webp" },
+      { code: "UNKNOWN", cn: "狸到底是谁？", intro: "你已经超出了常见的小狸花分类", rarity: "special", img: "./images/UNKNOWN/UNKNOWN.webp" },
+    ];
+
+    const RARITY_META = {
+      legendary: { label: "传说", color: "#ffd700", order: 0 },
+      epic: { label: "史诗", color: "#9b59b6", order: 1 },
+      rare: { label: "稀有", color: "#3498db", order: 2 },
+      uncommon: { label: "优秀", color: "#2ecc71", order: 3 },
+      common: { label: "普通", color: "#8b7355", order: 4 },
+      special: { label: "特殊", color: "#e74c3c", order: 5 },
+    };
+
+    // Render legend
+    const legendEl = document.getElementById('legend');
+    Object.entries(RARITY_META).forEach(([key, meta]) => {
+      const count = TYPES.filter(t => t.rarity === key).length;
+      legendEl.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${meta.color}"></div>${meta.label} (${count})</div>`;
+    });
+
+    // Render filters
+    const filtersEl = document.getElementById('filters');
+    let currentFilter = 'all';
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-btn active';
+    allBtn.textContent = '全部';
+    allBtn.onclick = () => { currentFilter = 'all'; renderGrid(); updateBtns(); };
+    filtersEl.appendChild(allBtn);
+
+    Object.entries(RARITY_META).forEach(([key, meta]) => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.rarity = key;
+      btn.textContent = meta.label;
+      btn.onclick = () => { currentFilter = key; renderGrid(); updateBtns(); };
+      filtersEl.appendChild(btn);
+    });
+
+    function updateBtns() {
+      filtersEl.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('active', currentFilter === (b.dataset.rarity || 'all'));
+      });
+    }
+
+    // Render grid
+    const gridEl = document.getElementById('grid');
+    function renderGrid() {
+      const filtered = currentFilter === 'all' ? TYPES : TYPES.filter(t => t.rarity === currentFilter);
+      filtered.sort((a, b) => RARITY_META[a.rarity].order - RARITY_META[b.rarity].order);
+
+      gridEl.innerHTML = filtered.map(t => {
+        const meta = RARITY_META[t.rarity];
+        return `
+          <div class="card">
+            <div class="rarity-tag rarity-${t.rarity}">${meta.label}</div>
+            <div class="card-img-wrap">
+              <img src="${t.img}" alt="${t.code}" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <div class="card-code">${t.code}</div>
+              <div class="card-cn">${t.cn}</div>
+              <div class="card-intro">${t.intro}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderGrid();
+  </script>
+</body>
+
+</html>
