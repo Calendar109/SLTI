@@ -684,10 +684,12 @@
       So3: { name: 'So3 从众性', model: '圈内社交' },
       Id1: { name: 'Id1 专一度', model: '同好身份' },
       Id2: { name: 'Id2 入圈标准', model: '同好身份' },
-      Id3: { name: 'Id3 圈外公开度', model: '同好身份' }
+      Id3: { name: 'Id3 圈外公开度', model: '同好身份' },
+      Rx: { name: 'Rx 内容尺度', model: '内容取向' },
+      Cs: { name: 'Cs 扮演偏好', model: '内容取向' }
     };
 
-    const dimensionOrder = ['P1', 'P2', 'P3', 'C1', 'C2', 'C3', 'Sp1', 'Sp2', 'Sp3', 'So1', 'So2', 'So3', 'Id1', 'Id2', 'Id3'];
+    const dimensionOrder = ['P1', 'P2', 'P3', 'C1', 'C2', 'C3', 'Sp1', 'Sp2', 'Sp3', 'So1', 'So2', 'So3', 'Id1', 'Id2', 'Id3', 'Rx', 'Cs'];
 
     // ============ 30道题目 ============
     const questions = [
@@ -756,7 +758,7 @@
         id: 'q9', dim: 'C2', text: '如果你要产出秦彻相关内容，你更倾向于：', options: [
           { label: '表情包/截图配文...简简单单就行', value: 1 },
           { label: '在网上画画/剪辑视频/写文...赛博艺术狸来了', value: 2 },
-          { label: '手工制品或Cosplay...要在三次元触摸得到', value: 3 }
+          { label: '手工/实体制品（周边、手工、服装道具等）...要在三次元触摸得到', value: 3 }
         ]
       },
       {
@@ -914,6 +916,36 @@
           { label: '完全不会，我们可是地下恋情', value: 1 },
           { label: '小号会发，大号不发，我明面上可是正经猎人', value: 2 },
           { label: '大方官宣，丈夫的美貌，妻子的荣耀！', value: 3 }
+        ]
+      },
+      // Rx 内容尺度
+      {
+        id: 'q31', dim: 'Rx', text: '对于秦彻的少儿不宜创作内容，你会：', options: [
+          { label: '完全绕着走，我正经得很', value: 1 },
+          { label: '偶尔吃一口，但不主动找', value: 2 },
+          { label: '不黄的东西就不要浪费大家时间了', value: 3 }
+        ]
+      },
+      {
+        id: 'q32', dim: 'Rx', text: '关于秦彻，你有没有产生过"私密"向的幻想或联想：', options: [
+          { label: '没有！和家彻是柏拉图来的', value: 1 },
+          { label: '偶尔一闪而过，然后就过去了', value: 2 },
+          { label: '经常有！这样的，那样的，你懂的...咳', value: 3 }
+        ]
+      },
+      // Cs 扮演偏好
+      {
+        id: 'q33', dim: 'Cs', text: '对于cos成秦彻，你：', options: [
+          { label: '我是狸，不是要成为他', value: 1 },
+          { label: '喜欢看别人cos！自己应该不会去做', value: 2 },
+          { label: '我想成为他，穿上cos服完全入戏', value: 3 }
+        ]
+      },
+      {
+        id: 'q34', dim: 'Cs', text: '看到秦彻cos，你：', options: [
+          { label: '普通观众，看看就好', value: 1 },
+          { label: '和cos大神拍照、互动', value: 2 },
+          { label: '我也要亲自出cos！这是和他最亲密的联结方式', value: 3 }
         ]
       }
     ];
@@ -1089,30 +1121,30 @@
 
     // 品种类型标准模式 (15维度)
     const NORMAL_TYPES = [
-      { code: 'ALL-IN', pattern: 'HHH-HMM-HMM-HHM-HMM' },
-      { code: 'RICH', pattern: 'HMM-MLM-HHH-MMM-HMM' },
-      { code: 'ARMY', pattern: 'HMM-MLM-MMM-HHM-HHM' },
-      { code: 'COOK', pattern: 'HMH-HHM-MMM-MMM-MMM' },
-      { code: 'LORE', pattern: 'HHM-HHM-MMM-MMM-MMM' },
-      { code: 'BARD', pattern: 'HMM-MHH-MMM-MHM-MLH' },
-      { code: 'SAVE', pattern: 'HHM-LLM-MMM-LMM-MMM' },
-      { code: 'SOLO', pattern: 'HMH-MMM-MMM-HMM-HHM' },
-      { code: 'DATA', pattern: 'HHM-MMM-MMM-MML-MMM' },
-      { code: 'COS-er', pattern: 'HMH-HHM-MMM-MHM-MMH' },
-      { code: 'LIVE', pattern: 'HMH-LMM-MMM-MLM-MMM' },
-      { code: 'NUDE', pattern: 'HMH-MMH-MMM-MHM-MMH' },
-      { code: 'MAKE', pattern: 'HMM-HHM-MMM-MMM-MMM' },
-      { code: 'CHEC-K', pattern: 'MHM-MMH-MMM-MLH-MML' },
-      { code: 'ZEN', pattern: 'HMM-LMM-LMM-LMM-MMM' },
-      { code: 'MEET', pattern: 'MMM-LMM-MHH-MHM-MMH' },
-      { code: 'PORT', pattern: 'HMM-LMH-MMM-MMM-MMM' },
-      { code: 'ECHO', pattern: 'HMH-LMM-MMM-LLM-MMM' },
-      { code: 'DIVE', pattern: 'MMM-LMM-LMM-LLM-MMM' },
-      { code: 'HIDE', pattern: 'HMH-LMM-MMM-MLM-MML' },
-      { code: 'OQCK', pattern: 'MMM-LMM-LMM-LMM-LMM' },
-      { code: 'BUSY', pattern: 'LML-LMM-LMM-LMM-LMM' },
-      { code: 'FLOW', pattern: 'MMM-LMM-MMM-MMH-MLM' },
-      { code: 'OUTD', pattern: 'HMM-MMM-LML-MMM-MMM' }
+      { code: 'ALL-IN', pattern: 'HHH-HMM-HMM-HHM-HMM-HH' },  // Rx=H Cs=H 全都要
+      { code: 'RICH', pattern: 'HMM-MLM-HHH-MMM-HMM-MM' },  // Rx=M Cs=M 中性
+      { code: 'ARMY', pattern: 'HMM-MLM-MMM-HHM-HHM-LL' },  // Rx=L Cs=L 战斗不搞色
+      { code: 'COOK', pattern: 'HMH-HHM-MMM-MMM-MMM-LL' },  // Rx=L Cs=L SFW数字创作
+      { code: 'LORE', pattern: 'HHM-HHM-MMM-MMM-MMM-LL' },  // Rx=L Cs=L 考据不色
+      { code: 'BARD', pattern: 'HMM-MHH-MMM-MHM-MLH-MM' },  // Rx=M Cs=M 传播各类
+      { code: 'SAVE', pattern: 'HHM-LLM-MMM-LMM-MMM-LL' },  // Rx=L Cs=L 存档整洁
+      { code: 'SOLO', pattern: 'HMH-MMM-MMM-HMM-HHM-MM' },  // Rx=M Cs=M 中性独行
+      { code: 'DATA', pattern: 'HHM-MMM-MMM-MML-MMM-LL' },  // Rx=L Cs=L 数据理性
+      { code: 'COS-er', pattern: 'HMH-HHM-MMM-MHM-MMH-MH' },  // Rx=M Cs=H 扮演爱好者
+      { code: 'LIVE', pattern: 'HMH-LMM-MMM-MLM-MMM-ML' },  // Rx=M Cs=L 日常陪伴
+      { code: 'NUDE', pattern: 'HMH-MMH-MMM-MHM-MMH-HM' },  // Rx=H Cs=M R18爱好者
+      { code: 'MAKE', pattern: 'HMM-HHM-MMM-MMM-MMM-LL' },  // Rx=L Cs=L SFW手工
+      { code: 'CHEC-K', pattern: 'MHM-MMH-MMM-MLH-MML-MM' },  // Rx=M Cs=M 策略中性
+      { code: 'ZEN', pattern: 'HMM-LMM-LMM-LMM-MMM-ML' },  // Rx=M Cs=L 佛系
+      { code: 'MEET', pattern: 'MMM-LMM-MHH-MHM-MMH-LH' },  // Rx=L Cs=H 线下Cos活动
+      { code: 'PORT', pattern: 'HMM-LMH-MMM-MMM-MMM-MM' },  // Rx=M Cs=M 搬运各类
+      { code: 'ECHO', pattern: 'HMH-LMM-MMM-LLM-MMM-HL' },  // Rx=H Cs=L 私密代入幻想
+      { code: 'DIVE', pattern: 'MMM-LMM-LMM-LLM-MMM-ML' },  // Rx=M Cs=L 潜水
+      { code: 'HIDE', pattern: 'HMH-LMM-MMM-MLM-MML-ML' },  // Rx=M Cs=L 地下私密
+      { code: 'OQCK', pattern: 'MMM-LMM-LMM-LMM-LMM-ML' },  // Rx=M Cs=L 随缘
+      { code: 'BUSY', pattern: 'LML-LMM-LMM-LMM-LMM-ML' },  // Rx=M Cs=L 多推
+      { code: 'FLOW', pattern: 'MMM-LMM-MMM-MMH-MLM-MM' },  // Rx=M Cs=M 随大流
+      { code: 'OUTD', pattern: 'HMM-MMM-LML-MMM-MMM-LL' },  // Rx=L Cs=L 编外
     ];
 
     // 图片路径
@@ -1284,14 +1316,19 @@
       // 构建用户向量
       const userVector = dimensionOrder.map(dim => levelNum(levels[dim]));
 
-      // 计算与各类型的相似度
+      // 维度权重：Rx(内容尺度) 和 Cs(扮演偏好) 各权重3，其余维度权重1
+      // 作用：R18/Cosplay 相关选项对最终类型判断更具决定性
+      const DIM_WEIGHTS = dimensionOrder.map(dim => (dim === 'Rx' || dim === 'Cs') ? 3 : 1);
+      const MAX_WEIGHTED_DIST = DIM_WEIGHTS.reduce((s, w) => s + w * 2, 0); // = 15×2 + 3×2 + 3×2 = 42
+
+      // 计算与各类型的加权相似度
       const ranked = NORMAL_TYPES.map(type => {
         const typeVector = parsePattern(type.pattern).map(levelNum);
         let distance = 0;
         for (let i = 0; i < typeVector.length; i++) {
-          distance += Math.abs(userVector[i] - typeVector[i]);
+          distance += Math.abs(userVector[i] - typeVector[i]) * DIM_WEIGHTS[i];
         }
-        const similarity = Math.max(0, Math.round((1 - distance / 30) * 100));
+        const similarity = Math.max(0, Math.round((1 - distance / MAX_WEIGHTED_DIST) * 100));
         return { ...type, distance, similarity };
       }).sort((a, b) => b.similarity - a.similarity);
 
@@ -1349,7 +1386,8 @@
         { name: '产出创作', dims: ['C1', 'C2', 'C3'] },
         { name: '消费行为', dims: ['Sp1', 'Sp2', 'Sp3'] },
         { name: '圈内社交', dims: ['So1', 'So2', 'So3'] },
-        { name: '同好身份', dims: ['Id1', 'Id2', 'Id3'] }
+        { name: '同好身份', dims: ['Id1', 'Id2', 'Id3'] },
+        { name: '内容取向', dims: ['Rx', 'Cs'] }
       ];
 
       const dimDetail = document.getElementById('dimensionDetail');
