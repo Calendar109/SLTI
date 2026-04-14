@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SLTI 小狸花人格鉴定</title>
+  <title>SLTI 小狸花品种鉴定</title>
   <style>
     :root {
-      --bg: #fef7f3;
+      --bg: #fef5f5;
       --panel: #ffffff;
-      --text: #2d1f1a;
-      --muted: #8b7355;
-      --line: #e8d5c4;
-      --soft: #fdf2eb;
-      --accent: #d4735c;
-      --accent-strong: #c45a42;
-      --shadow: 0 16px 40px rgba(196, 90, 66, 0.12);
+      --text: #2d1a1a;
+      --muted: #8b5a5a;
+      --line: #e8c8c8;
+      --soft: #fde8e8;
+      --accent: #c0392b;
+      --accent-strong: #a93226;
+      --shadow: 0 16px 40px rgba(169, 50, 38, 0.12);
       --radius: 22px;
     }
 
@@ -31,7 +31,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: radial-gradient(circle at top left, #fff5f0 0, #fef7f3 36%, #fdf5f1 100%);
+      background: radial-gradient(circle at top left, #fff5f5 0, #fef5f5 36%, #fdf5f5 100%);
       color: var(--text);
       min-height: 100vh;
     }
@@ -64,7 +64,7 @@
       width: 180px;
       height: 180px;
       border-radius: 50%;
-      background: linear-gradient(180deg, rgba(212, 115, 92, 0.18), rgba(212, 115, 92, 0.02));
+      background: linear-gradient(180deg, rgba(192, 57, 43, 0.15), rgba(192, 57, 43, 0.02));
       pointer-events: none;
     }
 
@@ -100,14 +100,13 @@
       color: var(--muted);
       font-size: 15px;
       line-height: 1.75;
-      max-width: 720px;
+      max-width: 100%;
     }
 
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
+      display: flex;
       gap: 18px;
-      align-items: stretch;
+      align-items: flex-start;
       margin-top: 24px;
     }
 
@@ -115,7 +114,7 @@
       padding: 18px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, #fffbf8, #fdf5f0);
+      background: linear-gradient(180deg, #fffbfb, #fdf5f5);
     }
 
     .mini-panel h3 {
@@ -174,7 +173,7 @@
       color: #fff;
       padding: 14px 20px;
       border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(196, 90, 66, 0.22);
+      box-shadow: 0 12px 30px rgba(169, 50, 38, 0.22);
       font-weight: 700;
     }
 
@@ -214,7 +213,7 @@
       flex: 1;
       min-width: 240px;
       height: 10px;
-      background: #f5e6dc;
+      background: #f5dcdc;
       border-radius: 999px;
       overflow: hidden;
     }
@@ -223,7 +222,7 @@
       display: block;
       width: 0;
       height: 100%;
-      background: linear-gradient(90deg, #e8a090, #d4735c);
+      background: linear-gradient(90deg, #e89090, #c0392b);
       border-radius: inherit;
       transition: width .22s ease;
     }
@@ -238,7 +237,7 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fffcfa);
+      background: linear-gradient(180deg, #ffffff, #fffcfc);
       margin-bottom: 16px;
     }
 
@@ -288,12 +287,12 @@
 
     .option:hover {
       border-color: #e0a090;
-      background: #fffaf7;
+      background: #fff9f9;
     }
 
     .option.selected {
       border-color: var(--accent-strong);
-      background: #fff5f0;
+      background: #fff5f5;
     }
 
     .option input {
@@ -379,14 +378,14 @@
     .similarity-track {
       flex: 1;
       height: 8px;
-      background: #f5e6dc;
+      background: #f5dcdc;
       border-radius: 4px;
       overflow: hidden;
     }
 
     .similarity-fill {
       height: 100%;
-      background: linear-gradient(90deg, #e8a090, #d4735c);
+      background: linear-gradient(90deg, #e89090, #c0392b);
       border-radius: 4px;
     }
 
@@ -456,7 +455,7 @@
     .dim-bar {
       flex: 1;
       height: 12px;
-      background: #f5e6dc;
+      background: #f5dcdc;
       border-radius: 6px;
       overflow: hidden;
     }
@@ -479,7 +478,7 @@
 
     .dim-fill.level-H {
       width: 100%;
-      background: linear-gradient(90deg, #e8a090, #c45a42);
+      background: linear-gradient(90deg, #e89090, #a93226);
     }
 
     .dim-level-badge {
@@ -503,7 +502,7 @@
     }
 
     .dim-level-badge.level-H {
-      background: #c45a42;
+      background: #a93226;
     }
 
     .nav-links {
@@ -593,34 +592,30 @@
         <span class="eyebrow">SLTI · Sylus's Lover Type Indicator</span>
         <h1>测测你是什么小狸花</h1>
         <p class="sub">
-          小狸花是秦彻对心上人的爱称。<br>
-          通过 30 道场景题，从 5 大模型、15 个维度分析你的行为模式，匹配 26 种小狸花人格类型。
+          小狸花（Dragon Li）是 动物界 脊索动物门 哺乳纲 灵长目 人科 人属 人种 中的亚种之一，是秦彻的心上人的俗称。<br>
+
+          【形态特征】在每年的特殊时期，身上会出现一些红黑色系的特征。看到秦彻涩图时，面部或身体会产生一定的扭曲。<br>
+
+          【生活习性】彻食性，爱吃秦彻有关的东西。最喜欢的事情是对秦彻上下其手，也喜欢喵喵咪咪的拱来拱去。行为复杂，对秦彻的求偶手段多样，从纯情到抽象都有，极为丰富。<br>
+
+          【分布范围】主要分布在中国，几乎遍布于全世界，其中大黄狸在各地区都较为常见。<br>
+
+          【动物保护】已被列入2024年发布的《N109自然保护联盟的陆生野生动物名录》<br>
         </p>
         <div class="hero-grid">
           <div class="mini-panel">
-            <h3>五大模型</h3>
-            <ul>
-              <li><strong>热爱驱力</strong> · 沉迷深度 · 深究度 · 拟人化程度</li>
-              <li><strong>产出创作</strong> · 创作冲动 · 创作形式 · 分享欲</li>
-              <li><strong>消费行为</strong> · 氪金意愿 · 周边购欲 · 线下参与</li>
-              <li><strong>圈内社交</strong> · 战斗性 · 社群活跃度 · 从众性</li>
-              <li><strong>同好身份</strong> · 专一度 · 入圈标准 · 圈外公开度</li>
-            </ul>
-          </div>
-          <div class="mini-panel">
             <h3>测试须知</h3>
             <ul>
-              <li>共 31 道选择题</li>
-              <li>预计用时 5-8 分钟</li>
-              <li>请根据第一反应作答</li>
-              <li>本测试仅供秦彻0418生日快乐</li>
+              <li>共 31 道选择题，5大模型，15维度，26种品种</li>
+              <li>请根据第一反应作答，预计用时 5-8 分钟</li>
+              <li>秦彻0418生日快乐！</li>
             </ul>
           </div>
         </div>
         <div class="hero-actions">
-          <button class="btn-primary" onclick="startTest()">开始测试</button>
+          <button class="btn-primary" onclick="startTest()">开始鉴定</button>
           <a class="btn-secondary" href="./gallery.html"
-            style="text-decoration:none;display:inline-flex;align-items:center;">人格图鉴</a>
+            style="text-decoration:none;display:inline-flex;align-items:center;">品种图鉴</a>
           <a class="btn-secondary" href="./leaderboard.html"
             style="text-decoration:none;display:inline-flex;align-items:center;">统计排行</a>
         </div>
@@ -664,7 +659,7 @@
           <button class="btn-primary" onclick="restartTest()">重新测试</button>
         </div>
         <div class="nav-links">
-          <a class="nav-link" href="./gallery.html">查看人格图鉴</a>
+          <a class="nav-link" href="./gallery.html">查看品种图鉴</a>
           <a class="nav-link" href="./leaderboard.html">查看统计排行</a>
         </div>
       </div>
@@ -698,9 +693,9 @@
       // P1 沉迷深度
       {
         id: 'q1', dim: 'P1', text: '你打开手机，发现秦彻相关内容推送了一大堆，你会：', options: [
-          { label: '随便瞄一眼，关掉继续做别的事', value: 1 },
+          { label: '随便瞄一眼就满足了，继续做别的事', value: 1 },
           { label: '挑几个感兴趣的看看', value: 2 },
-          { label: '一个个点进去，不知不觉一小时过去了', value: 3 }
+          { label: '逐一品鉴，不知不觉一小时过去了', value: 3 }
         ]
       },
       {
@@ -712,77 +707,77 @@
       },
       // P2 深究度
       {
-        id: 'q3', dim: 'P2', text: '发现一个关于秦彻的设定细节，你会：', options: [
-          { label: '知道就行，不深究', value: 1 },
-          { label: '感兴趣的话会去搜一搜', value: 2 },
-          { label: '必须查清楚出处，交叉验证，整理成笔记', value: 3 }
+        id: 'q3', dim: 'P2', text: '发现一个关于秦彻的细节，你会：', options: [
+          { label: '好了好了狸知道了', value: 1 },
+          { label: '偶尔去搜一搜，细品', value: 2 },
+          { label: '必须查清出处，交叉验证，整理笔记', value: 3 }
         ]
       },
       {
-        id: 'q4', dim: 'P2', text: '看到有人讨论秦彻的剧情解读，你会：', options: [
-          { label: '看个热闹就好', value: 1 },
-          { label: '有道理的观点会记住', value: 2 },
-          { label: '自己也去翻原作验证，可能还会写长评', value: 3 }
+        id: 'q4', dim: 'P2', text: '关于秦彻，你有没有自己独立想出来的解读或理论？', options: [
+          { label: '没怎么想过，主要看别人怎么说', value: 1 },
+          { label: '有自己的感受，但说不太清楚', value: 2 },
+          { label: '有！整理过自己的推导，觉得比官方解释更在乎这个问题', value: 3 }
         ]
       },
       // P3 拟人化程度
       {
-        id: 'q5', dim: 'P3', text: '现实中遇到和秦彻相似的事物/场景时，你会：', options: [
-          { label: '没什么特别感觉', value: 1 },
+        id: 'q5', dim: 'P3', text: '现实中遇到和秦彻相关的事物/场景时，你会：', options: [
+          { label: '啊？有吗', value: 1 },
           { label: '会心一笑，想到他', value: 2 },
           { label: '立刻拍照发圈/截图保存，"这不是秦彻吗！"', value: 3 }
         ]
       },
       {
         id: 'q6', dim: 'P3', text: '做重要决定时，你会不会想"秦彻会怎么做"：', options: [
-          { label: '不会，他是他我是我', value: 1 },
+          { label: '不会，我有自己的想法', value: 1 },
           { label: '偶尔会闪过这个念头', value: 2 },
-          { label: '经常会，他的态度对我有影响', value: 3 }
+          { label: '经常会，他对我的现生产生了影响', value: 3 }
         ]
       },
       // C1 创作冲动
       {
         id: 'q7', dim: 'C1', text: '看到一个特别戳你的秦彻场景，你会：', options: [
-          { label: '欣赏一下就好', value: 1 },
+          { label: '品鉴一下', value: 1 },
           { label: '转发/收藏', value: 2 },
-          { label: '脑子里已经开始构思二创了', value: 3 }
+          { label: '诶，我有一个二创构思...', value: 3 }
         ]
       },
       {
         id: 'q8', dim: 'C1', text: '脑海中突然闪过一个关于秦彻的创作灵感时：', options: [
-          { label: '想想就算了', value: 1 },
-          { label: '记下来，有空再说', value: 2 },
-          { label: '立刻开始动手！', value: 3 }
+          { label: '光是想想就爽完了', value: 1 },
+          { label: '记下来，有空再具现化', value: 2 },
+          { label: '立刻开始动手！急死狸了！', value: 3 }
         ]
       },
       // C2 创作形式
       {
         id: 'q9', dim: 'C2', text: '如果你要产出秦彻相关内容，你更倾向于：', options: [
-          { label: '简单的表情包/截图配文', value: 1 },
-          { label: '剪辑视频或写短文', value: 2 },
-          { label: '画画/写长篇/做手工/Cosplay等需要大量时间的创作', value: 3 }
+          { label: '表情包/截图配文...简简单单就行', value: 1 },
+          { label: '在网上画画/剪辑视频/写文...赛博艺术狸来了', value: 2 },
+          { label: '手工制品或Cosplay...要在三次元触摸得到', value: 3 }
         ]
       },
       {
         id: 'q10', dim: 'C2', text: '你对自己创作的秦彻相关作品的态度是：', options: [
           { label: '自娱自乐，能做出来就行', value: 1 },
-          { label: '希望做得不错，但不强求完美', value: 2 },
-          { label: '精益求精，细节必须到位', value: 3 }
+          { label: '希望做得不错，但不强求完美，差不多得狸~', value: 2 },
+          { label: '精益求精，才有风度', value: 3 }
         ]
       },
       // C3 分享欲
       {
         id: 'q11', dim: 'C3', text: '发现/创作了秦彻的好内容后，你会：', options: [
-          { label: '自己收藏就好', value: 1 },
-          { label: '发给几个同好朋友', value: 2 },
-          { label: '必须分享到各个平台！', value: 3 }
+          { label: '自己收藏，傻笑', value: 1 },
+          { label: '发给几个亲友，尽情口嗨', value: 2 },
+          { label: '必须分享到各个平台！大家都来赏彻！', value: 3 }
         ]
       },
       {
-        id: 'q12', dim: 'C3', text: '在社交平台上分享秦彻相关内容时，你：', options: [
-          { label: '很少主动分享', value: 1 },
-          { label: '偶尔分享一下', value: 2 },
-          { label: '经常分享，恨不得让所有人都知道他好', value: 3 }
+        id: 'q12', dim: 'C3', text: '日常聊天/发帖时，你会主动把秦彻"带入话题"吗？', options: [
+          { label: '不会，有内容才分享，不会强行扯上他', value: 1 },
+          { label: '遇到相关话题会顺带提，不会无中生有', value: 2 },
+          { label: '经常！日常对话里他是常驻嘉宾，没有内容也能聊出来', value: 3 }
         ]
       },
       // Sp1 氪金意愿
@@ -809,10 +804,10 @@
         ]
       },
       {
-        id: 'q16', dim: 'Sp2', text: '对于秦彻相关的实体周边，你：', options: [
-          { label: '没什么收藏欲', value: 1 },
-          { label: '有选择性地收', value: 2 },
-          { label: '已经有一整面墙/一整柜了', value: 3 }
+        id: 'q16', dim: 'Sp2', text: '你会为秦彻购买非官方的同人周边/高价二手谷子吗？', options: [
+          { label: '不会，要买就买官方正品', value: 1 },
+          { label: '遇到特别喜欢的同人作品也会入手', value: 2 },
+          { label: '只要和秦彻有关，官方同人二手都收', value: 3 }
         ]
       },
       // Sp3 线下参与
@@ -824,10 +819,10 @@
         ]
       },
       {
-        id: 'q18', dim: 'Sp3', text: '对于漫展、应援、联名店等线下活动，你：', options: [
-          { label: '基本不参加', value: 1 },
-          { label: '偶尔参加', value: 2 },
-          { label: '积极参与，乐此不疲', value: 3 }
+        id: 'q18', dim: 'Sp3', text: '参加秦彻相关线下活动时，你通常是什么角色？', options: [
+          { label: '纯观众，来了就看，有彻就够了', value: 1 },
+          { label: '偶尔帮忙传递物料/参与应援，但不主导', value: 2 },
+          { label: '积极参与组织/策划/制作物料，确保现场完美', value: 3 }
         ]
       },
       // So1 战斗性
@@ -839,37 +834,37 @@
         ]
       },
       {
-        id: 'q20', dim: 'So1', text: '当秦彻在投票/评选中需要支持时，你：', options: [
-          { label: '随缘，投不投看心情', value: 1 },
-          { label: '顺手投一票', value: 2 },
-          { label: '认真做数据，拉人助力', value: 3 }
+        id: 'q20', dim: 'So1', text: '有秦彻的投票/助力，你：', options: [
+          { label: '随缘，看心情', value: 1 },
+          { label: '基本都会顺手做一下', value: 2 },
+          { label: '认真做数据，能解锁福利也是为了我自己', value: 3 }
         ]
       },
       // So2 社群活跃度
       {
         id: 'q21', dim: 'So2', text: '在秦彻相关的社群/超话里，你通常：', options: [
-          { label: '潜水，基本不发言', value: 1 },
+          { label: '基本不发言', value: 1 },
           { label: '偶尔冒泡', value: 2 },
           { label: '活跃分子，经常参与讨论', value: 3 }
         ]
       },
       {
-        id: 'q22', dim: 'So2', text: '对于参与圈内讨论和互动，你：', options: [
-          { label: '更喜欢自己默默喜欢', value: 1 },
-          { label: '有感而发时会参与', value: 2 },
-          { label: '喜欢和大家一起聊，很有归属感', value: 3 }
+        id: 'q22', dim: 'So2', text: '在私下聊天或线下场合，你会主动向朋友安利秦彻吗？', options: [
+          { label: '不会，这是我和秦彻之间的事', value: 1 },
+          { label: '朋友问起才会聊，不主动安利', value: 2 },
+          { label: '经常！拉新狸入坑是我的使命，壮大猫群！', value: 3 }
         ]
       },
       // So3 从众性
       {
-        id: 'q23', dim: 'So3', text: '圈内大家都在做某个秦彻相关的活动时，你：', options: [
-          { label: '不太跟风，做自己的', value: 1 },
-          { label: '感兴趣的话会参加', value: 2 },
-          { label: '大家做我也做，融入集体很开心', value: 3 }
+        id: 'q23', dim: 'So3', text: '大家都在做某个秦彻相关的活动时，你：', options: [
+          { label: '不关注，做自己的，我是爱独行的狸', value: 1 },
+          { label: '感兴趣的话会参加，视情况决定要不要猛狸下山', value: 2 },
+          { label: '大家做我也做，咪咪喵喵地跑过来跑过去', value: 3 }
         ]
       },
       {
-        id: 'q24', dim: 'So3', text: '对于圈内的"圈规"和约定俗成的做法，你：', options: [
+        id: 'q24', dim: 'So3', text: '对于社区的一些自发的规则，你：', options: [
           { label: '不太在意，按自己方式来', value: 1 },
           { label: '了解但不强迫自己遵守', value: 2 },
           { label: '会认真了解并遵守', value: 3 }
@@ -877,14 +872,14 @@
       },
       // Id1 专一度
       {
-        id: 'q25', dim: 'Id1', text: '除了秦彻，对其他游戏角色/虚拟人物，你：', options: [
-          { label: '也有很多喜欢的', value: 1 },
-          { label: '会欣赏，但秦彻是特别的', value: 2 },
-          { label: '眼里只有秦彻', value: 3 }
+        id: 'q25', dim: 'Id1', text: '除了秦彻，对其他角色，你：', options: [
+          { label: '我只是给每一个喜欢的人一个家', value: 1 },
+          { label: '有喜欢的，但秦彻是正宫！', value: 2 },
+          { label: '秦彻单坑单推，心里没有其他人', value: 3 }
         ]
       },
       {
-        id: 'q26', dim: 'Id1', text: '如果有一个新角色很吸引你，你会：', options: [
+        id: 'q26', dim: 'Id1', text: '如果有新出的角色或新认识的真人很吸引你，你会：', options: [
           { label: '很容易就喜欢上了', value: 1 },
           { label: '会关注，但不会影响对秦彻的感情', value: 2 },
           { label: '看一眼就走，心里只有秦彻', value: 3 }
@@ -893,31 +888,31 @@
       // Id2 入圈标准
       {
         id: 'q27', dim: 'Id2', text: '对于新入坑秦彻的人，你的态度是：', options: [
-          { label: '都是喜欢他的人，欢迎欢迎', value: 1 },
-          { label: '希望他们能认真了解他', value: 2 },
-          { label: '要真正理解他才算入圈', value: 3 }
+          { label: '有新狸！欢迎欢迎！夹一下脑袋，戴一下头盔，踩一下狸jio', value: 1 },
+          { label: '新狸能去了解他多一点点就够啦', value: 2 },
+          { label: '希望不要三分钟热度，要去真正理解他的全部', value: 3 }
         ]
       },
       {
         id: 'q28', dim: 'Id2', text: '你觉得"真正喜欢秦彻"应该：', options: [
-          { label: '喜欢就是喜欢，没有标准', value: 1 },
-          { label: '至少要了解基本设定和剧情', value: 2 },
-          { label: '要深入理解他的内核', value: 3 }
+          { label: '喜欢就是喜欢，喜欢秦彻就是人之常情', value: 1 },
+          { label: '至少要了解基本设定和剧情啦！', value: 2 },
+          { label: '要深入理解他的内核，至少得有秦彻学学士学位', value: 3 }
         ]
       },
       // Id3 圈外公开度
       {
         id: 'q29', dim: 'Id3', text: '在不知道对方是否喜欢秦彻的朋友面前，你：', options: [
           { label: '绝对不提，藏得死死的', value: 1 },
-          { label: '看情况，聊得来可能会透露', value: 2 },
-          { label: '大方承认，说不定能发展同好', value: 3 }
+          { label: '看情况，只对聊得来的介绍家彻', value: 2 },
+          { label: '大方承认，说不定能发展同担', value: 3 }
         ]
       },
       {
         id: 'q30', dim: 'Id3', text: '你的社交账号/朋友圈会展示秦彻相关内容吗：', options: [
-          { label: '完全不会，严格保密', value: 1 },
-          { label: '小号会发，大号不发', value: 2 },
-          { label: '大方展示，这就是我', value: 3 }
+          { label: '完全不会，我们可是地下恋情', value: 1 },
+          { label: '小号会发，大号不发，我明面上可是正经猎人', value: 2 },
+          { label: '大方官宣，丈夫的美貌，妻子的荣耀！', value: 3 }
         ]
       }
     ];
@@ -925,13 +920,13 @@
     // 特殊门控题
     const gateQuestion = {
       id: 'gate', dim: 'GATE', text: '你现在还喜欢秦彻吗？', options: [
-        { label: '当然喜欢！', value: 1 },
-        { label: '说实话...已经没那么喜欢了', value: 2 },
-        { label: '不喜欢了，准备退坑', value: 3 }
+        { label: '当然喜欢！我是彻属性！', value: 1 },
+        { label: '好像有点淡了', value: 2 },
+        { label: '已经退坑/退坑边缘', value: 3 }
       ]
     };
 
-    // ============ 26种人格类型 ============
+    // ============ 26种品种类型 ============
     const TYPE_LIBRARY = {
       'ALL-IN': {
         code: 'ALL-IN', name: '全都要狸', rarity: 'legendary',
@@ -942,7 +937,7 @@
       'RICH': {
         code: 'RICH', name: '氪金狸', rarity: 'epic',
         tagline: '爱要用钱证明',
-        desc: '钱在哪，爱在哪的信徒，你的账单就是你对秦彻的爱，氪金/周边/线下总有你，秦彻你想不想要狸的大钱包啊？',
+        desc: '钱在哪，爱在哪的信徒，你的账单就是你对秦彻的爱，氪金/周边/线下总有你，秦彻秦彻你想不想要狸的大钱包啊？',
         quote: '就算要出卖灵魂，也要找个付得起价钱的人。'
       },
       'ARMY': {
@@ -1091,21 +1086,21 @@
       }
     };
 
-    // 人格类型标准模式 (15维度)
+    // 品种类型标准模式 (15维度)
     const NORMAL_TYPES = [
       { code: 'ALL-IN', pattern: 'HHH-HMM-HMM-HHM-HMM' },
       { code: 'RICH', pattern: 'HMM-MLM-HHH-MMM-HMM' },
       { code: 'ARMY', pattern: 'HMM-MLM-MMM-HHM-HHM' },
-      { code: 'COOK', pattern: 'HMH-HLM-MMM-MMM-MMM' },
-      { code: 'LORE', pattern: 'HHM-HLM-MMM-MMM-MMM' },
+      { code: 'COOK', pattern: 'HMH-HHM-MMM-MMM-MMM' },
+      { code: 'LORE', pattern: 'HHM-HHM-MMM-MMM-MMM' },
       { code: 'BARD', pattern: 'HMM-MHH-MMM-MHM-MLH' },
       { code: 'SAVE', pattern: 'HHM-LLM-MMM-LMM-MMM' },
       { code: 'SOLO', pattern: 'HMH-MMM-MMM-HMM-HHM' },
       { code: 'DATA', pattern: 'HHM-MMM-MMM-MML-MMM' },
       { code: 'COS-er', pattern: 'HMH-HHM-MMM-MHM-MMH' },
-      { code: 'LIVE', pattern: 'HMH-LMM-MMM-MLM-MML' },
+      { code: 'LIVE', pattern: 'HMH-LMM-MMM-MLM-MMM' },
       { code: 'NUDE', pattern: 'HMH-MMH-MMM-MHM-MMH' },
-      { code: 'MAKE', pattern: 'HMM-HMM-MMM-MMM-MMM' },
+      { code: 'MAKE', pattern: 'HMM-HHM-MMM-MMM-MMM' },
       { code: 'CHEC-K', pattern: 'MHM-MMH-MMM-MLH-MML' },
       { code: 'ZEN', pattern: 'HMM-LMM-LMM-LMM-MMM' },
       { code: 'MEET', pattern: 'MMM-LMM-MHH-MHM-MMH' },

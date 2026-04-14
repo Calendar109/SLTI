@@ -606,7 +606,7 @@
         </div>
         <div class="hero-actions">
           <a class="link-btn" href="./index.html">返回测试</a>
-          <a class="ghost-btn" href="./gallery.html">人格图鉴</a>
+          <a class="ghost-btn" href="./gallery.html">品种图鉴</a>
           <button id="refreshBtn" class="ghost-btn" type="button">刷新统计</button>
           <button id="clearBtn" class="ghost-btn" type="button">清除数据</button>
         </div>
@@ -623,9 +623,9 @@
         <div class="summary-note">在此浏览器中完成测试的次数</div>
       </article>
       <article class="summary-card card">
-        <div class="summary-label">已命中人格数</div>
+        <div class="summary-label">已命中品种数</div>
         <div class="summary-value" id="uniquePersonasHit">--</div>
-        <div class="summary-note">至少出现过一次的人格类型数量</div>
+        <div class="summary-note">至少出现过一次的品种类型数量</div>
       </article>
       <article class="summary-card card">
         <div class="summary-label">当前榜首</div>
@@ -643,7 +643,7 @@
       <div class="panel-head">
         <div>
           <h2>榜单前三</h2>
-          <p>按最终人格结果的累计次数排序</p>
+          <p>按最终品种结果的累计次数排序</p>
         </div>
         <div class="status" id="podiumStatus">正在加载...</div>
       </div>
@@ -821,7 +821,7 @@
       document.getElementById('uniquePersonasHit').textContent = formatNumber(uniqueHit);
       document.getElementById('updatedAt').textContent = `最近更新：${formatTime(Date.now())}`;
       document.getElementById('podiumStatus').textContent = total ? '已加载' : '暂无数据';
-      document.getElementById('tableStatus').textContent = `共 ${ranking.length} 种人格`;
+      document.getElementById('tableStatus').textContent = `共 ${ranking.length} 种品种`;
 
       if (leader && leader.count > 0) {
         document.getElementById('leaderName').textContent = leader.code;

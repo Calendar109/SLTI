@@ -23,7 +23,7 @@
 - 每个维度显示进度条和 L/M/H 等级标签
 - 颜色区分：L=灰色、M=橙色、H=深红色
 
-### 4. gallery.html 人格图鉴页面 (新增)
+### 4. gallery.html 品种图鉴页面 (新增)
 - 26种人格卡片展示，带图片和描述
 - 按稀有度筛选 (传说/史诗/稀有/优秀/普通/特殊)
 - 稀有度图例和统计数字
@@ -44,7 +44,7 @@
 ```
 /Users/liying64/Downloads/ai/app_project/slti/
 ├── index.html          # 主应用 (测试页面)
-├── gallery.html        # 人格图鉴页面 (新增)
+├── gallery.html        # 品种图鉴页面 (新增)
 ├── leaderboard.html    # 统计排行页面 (新增)
 ├── README.md           # 项目说明
 ├── type_li.md          # 类型详情参考
@@ -60,7 +60,7 @@ python3 -m http.server 8109
 访问 http://localhost:8109
 
 ## 页面导航
-- **首页** (index.html): 开始测试、人格图鉴、统计排行
-- **测试完成**: 查看结果、十五维度评分、人格图鉴、统计排行
+- **首页** (index.html): 开始测试、品种图鉴、统计排行
+- **测试完成**: 查看结果、十五维度评分、品种图鉴、统计排行
 - **图鉴** (gallery.html): 进入测试、查看统计
-- **统计** (leaderboard.html): 返回测试、人格图鉴
+- **统计** (leaderboard.html): 返回测试、品种图鉴
