@@ -601,8 +601,8 @@
       <div class="eyebrow">SLTI Stats Board</div>
       <div class="hero-top">
         <div class="hero-copy">
-          <h1>小狸花排行榜</h1>
-          <p>查看本地测试结果统计（数据保存在浏览器中）</p>
+          <h1>小狸花排行榜（功能暂未实现）</h1>
+          <p>查看本地测试结果统计</p>
         </div>
         <div class="hero-actions">
           <a class="link-btn" href="./index.html">返回测试</a>
@@ -660,10 +660,13 @@
       <div id="leaderboardTable" class="leaderboard-table"></div>
     </section>
 
-    <p class="footnote">* 数据保存在浏览器本地存储中，清除浏览器数据会丢失统计。</p>
+    <p class="footnote">* 数据来自 Supabase 云端，统计全体用户的测试结果。</p>
   </div>
 
   <script>
+    const SUPABASE_URL = 'https://htahkpulqiyomkcolgyz.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0YWhrcHVscWl5b21rY29sZ3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNDE3MTgsImV4cCI6MjA5MTcxNzcxOH0.x4fHvKCzPPMkEAnBfYfgBArHj7E5kEySLhZgOBB_-I0';
+
     const TYPES = [
       { code: "ALL-IN", cn: "全都要狸", intro: "哪里有秦彻，哪里就有我", img: "./images/ALL-IN/ALL-IN.webp" },
       { code: "RICH", cn: "氪金狸", intro: "爱要用钱证明", img: "./images/RICH/RICH.webp" },
@@ -708,10 +711,27 @@
       }).format(date);
     }
 
-    function getStats() {
+    async function fetchStats() {
       try {
-        return JSON.parse(localStorage.getItem('slti_stats') || '{"results":[]}');
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/slti_results?select=code,created_at&order=created_at.desc`,
+          {
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const rows = await response.json();
+        return {
+          results: rows.map(r => ({
+            code: r.code,
+            time: new Date(r.created_at).getTime()
+          }))
+        };
       } catch (e) {
+        console.error('Supabase fetch failed:', e);
         return { results: [] };
       }
     }
@@ -809,8 +829,10 @@
       }).join('');
     }
 
-    function loadStats() {
-      const stats = getStats();
+    async function loadStats() {
+      document.getElementById('podiumStatus').textContent = '加载中...';
+      document.getElementById('tableStatus').textContent = '加载中...';
+      const stats = await fetchStats();
       const ranking = computeRanking(stats);
       const total = stats.results.length;
       const uniqueHit = ranking.filter(r => r.count > 0).length;
@@ -846,10 +868,7 @@
 
     document.getElementById('refreshBtn').addEventListener('click', loadStats);
     document.getElementById('clearBtn').addEventListener('click', () => {
-      if (confirm('确定要清除所有统计数据吗？此操作不可撤销。')) {
-        localStorage.removeItem('slti_stats');
-        loadStats();
-      }
+      alert('数据存储在云端，无法从客户端清除。请登录 Supabase 管理后台进行操作。');
     });
 
     loadStats();

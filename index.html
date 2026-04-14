@@ -608,6 +608,7 @@
             <ul>
               <li>共 31 道选择题，5大模型，15维度，26种品种</li>
               <li>请根据第一反应作答，预计用时 5-8 分钟</li>
+              <li>实在来不及做完，图鉴图片都是表情包占位，秦彻生日后关闭该链接</li>
               <li>秦彻0418生日快乐！</li>
             </ul>
           </div>
@@ -1120,6 +1121,10 @@
       TYPE_IMAGES[code] = `./images/${code}/${code}.webp`;
     });
 
+    // ============ Supabase 配置 ============
+    const SUPABASE_URL = 'https://htahkpulqiyomkcolgyz.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0YWhrcHVscWl5b21rY29sZ3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNDE3MTgsImV4cCI6MjA5MTcxNzcxOH0.x4fHvKCzPPMkEAnBfYfgBArHj7E5kEySLhZgOBB_-I0';
+
     // ============ 应用状态 ============
     const app = {
       currentIndex: 0,
@@ -1366,11 +1371,25 @@
 
     // 保存结果到 localStorage
     function saveResult(typeCode) {
+      // 本地备份
       try {
         const stats = JSON.parse(localStorage.getItem('slti_stats') || '{"results":[],"visits":0}');
         stats.results.push({ code: typeCode, time: Date.now() });
         localStorage.setItem('slti_stats', JSON.stringify(stats));
       } catch (e) { }
+
+      // 上报到 Supabase（静默失败，不影响用户）
+      fetch(`${SUPABASE_URL}/rest/v1/slti_results`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ code: typeCode }),
+        keepalive: true
+      }).catch(() => { });
     }
 
     function restartTest() {
