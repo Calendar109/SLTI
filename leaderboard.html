@@ -601,14 +601,13 @@
       <div class="eyebrow">SLTI Stats Board</div>
       <div class="hero-top">
         <div class="hero-copy">
-          <h1>小狸花排行榜（功能暂未实现）</h1>
-          <p>查看本地测试结果统计</p>
+          <h1>小狸花品种数量排行榜</h1>
+          <p>测试结果统计</p>
         </div>
         <div class="hero-actions">
           <a class="link-btn" href="./index.html">返回测试</a>
           <a class="ghost-btn" href="./gallery.html">品种图鉴</a>
           <button id="refreshBtn" class="ghost-btn" type="button">刷新统计</button>
-          <button id="clearBtn" class="ghost-btn" type="button">清除数据</button>
         </div>
       </div>
       <div class="meta-row">
@@ -620,7 +619,7 @@
       <article class="summary-card card">
         <div class="summary-label">完成测试数</div>
         <div class="summary-value" id="totalResults">--</div>
-        <div class="summary-note">在此浏览器中完成测试的次数</div>
+        <div class="summary-note">完成测试的次数</div>
       </article>
       <article class="summary-card card">
         <div class="summary-label">已命中品种数</div>
@@ -661,6 +660,11 @@
     </section>
 
     <p class="footnote">* 数据来自 Supabase 云端，统计全体用户的测试结果。</p>
+    <div style="margin-top: 20px; text-align: center; padding-bottom: 12px;">
+      <a href="https://www.xiaohongshu.com/discovery/item/69de0164000000002301d899?app_platform=android&ignoreEngage=true&app_version=9.24.1&share_from_user_hidden=true&xsec_source=app_share&type=normal&xsec_token=CBtvizzMeXJWVZgxnxHJaXFKZjWVLFKWE3ueFHv-E91sk%3D&author_share=1&xhsshare=&shareRedId=OD45NjlLOUo2NzUyOTgwNjdHOTk5NT1P&apptime=1776234878&share_id=103502a22cfb41b8861f5fcc3d1ffe9d&share_channel=wechat#pushState"
+        target="_blank" rel="noopener noreferrer" class="ghost-btn"
+        style="text-decoration:none;">问题反馈 / 参与讨论</a>
+    </div>
   </div>
 
   <script>
@@ -877,9 +881,6 @@
     }
 
     document.getElementById('refreshBtn').addEventListener('click', loadStats);
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      alert('数据存储在云端，无法从客户端清除。请登录 Supabase 管理后台进行操作。');
-    });
 
     loadStats();
   </script>
